@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,11 +15,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.papkovskaya.olga.pets.data.PetsListContract;
 import com.papkovskaya.olga.pets.data.SQLiteHelper;
-import com.papkovskaya.olga.pets.data.TestUtil;
 
 import java.io.ByteArrayOutputStream;
 
@@ -119,22 +116,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data.getStringExtra("add_pet_name") != null && data.getByteArrayExtra("add_pet_image") != null){
-            String pet_name = data.getStringExtra("add_pet_name");
-            byte[] pet_image =  data.getByteArrayExtra("add_pet_image");
+        if(data != null) {
+            if (data.getStringExtra("add_pet_name") != null && data.getByteArrayExtra("add_pet_image") != null) {
+                String pet_name = data.getStringExtra("add_pet_name");
+                byte[] pet_image = data.getByteArrayExtra("add_pet_image");
 
-            addNewPet(pet_name, pet_image);
+                addNewPet(pet_name, pet_image);
 
-            mAdapter.swapCursor(getAllPets());
-        }
-        if (data.getStringExtra("edit_pet_name") != null && data.getByteArrayExtra("edit_pet_image") != null){
-            long id = data.getLongExtra("edit_pet_id", -1);
-            String pet_name = data.getStringExtra("edit_pet_name");
-            byte[] pet_image =  data.getByteArrayExtra("edit_pet_image");
+                mAdapter.swapCursor(getAllPets());
+            }
+            if (data.getStringExtra("edit_pet_name") != null && data.getByteArrayExtra("edit_pet_image") != null) {
+                long id = data.getLongExtra("edit_pet_id", -1);
+                String pet_name = data.getStringExtra("edit_pet_name");
+                byte[] pet_image = data.getByteArrayExtra("edit_pet_image");
 
-            editPet(id,pet_name, pet_image);
+                editPet(id, pet_name, pet_image);
 
-            mAdapter.swapCursor(getAllPets());
+                mAdapter.swapCursor(getAllPets());
+            }
         }
     }
 
